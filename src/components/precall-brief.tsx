@@ -39,6 +39,11 @@ export function PrecallBrief({ dealId, autoLoad = false }: PrecallBriefProps) {
   }, [dealId]);
 
   useEffect(() => {
+    // Fetching on mount is exactly what this effect is for — synchronising
+    // with the server, an external system. The rule flags load()'s first line
+    // (setLoading(true)) as a synchronous setState inside an effect, but
+    // there is no network call that can avoid starting in that state.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (autoLoad) void load();
   }, [autoLoad, load]);
 
