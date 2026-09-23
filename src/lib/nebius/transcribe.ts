@@ -122,7 +122,7 @@ async function viaAudioEndpoint(request: TranscriptionRequest): Promise<Transcri
   });
 
   // Cast because the model id is provider-specific and not in the SDK's union.
-  const response = await client.audio.transcriptions.create({
+  const response: unknown = await client.audio.transcriptions.create({
     file,
     model: MODEL_TIERS.OMNI,
   } as never);
@@ -130,7 +130,7 @@ async function viaAudioEndpoint(request: TranscriptionRequest): Promise<Transcri
   const text =
     typeof response === 'string'
       ? response.trim()
-      : ((response as { text?: string }).text ?? '').trim();
+      : ((response as { text?: string } | null)?.text ?? '').trim();
 
   if (!text) throw new Error('Audio endpoint returned an empty transcript');
 
