@@ -61,8 +61,18 @@ export interface WireTool {
   };
 }
 
-/** Project a tool definition onto the wire format the model expects. */
-export function toWireTool(tool: ToolDefinition<never>): WireTool {
+/**
+ * Project a tool definition onto the wire format the model expects.
+ *
+ * Accepts a minimal shape rather than the full generic `ToolDefinition`, because
+ * the registry holds tools with mutually incompatible argument types and only
+ * these three fields are ever needed here.
+ */
+export function toWireTool(tool: {
+  name: string;
+  description: string;
+  jsonSchema: Record<string, unknown>;
+}): WireTool {
   return {
     type: 'function',
     function: {
