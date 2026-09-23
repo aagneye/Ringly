@@ -12,7 +12,9 @@ import { toWireTool, type ToolDefinition, type WireTool } from './types';
  * ones that should fire on almost every memo come first and the situational ones
  * come last.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// `any` here is intentional: the registry holds tools with mutually
+// incompatible argument types, and the alternative (a wide union) would force
+// every caller to narrow before use for no real safety gain.
 const ALL_TOOLS: ToolDefinition<any>[] = [
   updateDealTool,
   setReminderTool,
@@ -21,17 +23,14 @@ const ALL_TOOLS: ToolDefinition<any>[] = [
   lookupCompanyTool,
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const BY_NAME = new Map<string, ToolDefinition<any>>(ALL_TOOLS.map((tool) => [tool.name, tool]));
 
 /** Every registered tool. */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function allTools(): readonly ToolDefinition<any>[] {
   return ALL_TOOLS;
 }
 
 /** Look up a tool by the name the model used. */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function findTool(name: string): ToolDefinition<any> | undefined {
   return BY_NAME.get(name);
 }
