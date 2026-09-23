@@ -12,6 +12,17 @@ export const metadata: Metadata = {
     statusBarStyle: 'black-translucent',
     title: 'Ringly',
   },
+  openGraph: {
+    title: 'Ringly — your chief of staff',
+    description: 'Talk for sixty seconds after a client call. Ringly decides what to do and does it.',
+    type: 'website',
+    images: ['/icon.svg'],
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Ringly — your chief of staff',
+    description: 'Talk for sixty seconds after a client call. Ringly decides what to do and does it.',
+  },
 };
 
 export const viewport: Viewport = {
