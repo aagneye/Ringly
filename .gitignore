@@ -21,7 +21,8 @@ next-env.d.ts
 /coverage
 
 # drizzle
-/drizzle/meta
+# note: drizzle/meta is intentionally committed — drizzle-kit needs the
+# journal and snapshots to generate correct incremental migrations.
 
 # misc
 .DS_Store
