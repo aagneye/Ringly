@@ -62,7 +62,14 @@ export function useRecorder(maxSeconds = 120): UseRecorderResult {
   const [elapsed, setElapsed] = useState(0);
   const [level, setLevel] = useState(0);
   const [error, setError] = useState<string | null>(null);
-  const [supported, setSupported] = useState(true);
+  // A static feature check, not a subscription to something that changes over
+  // the component's life, so it is read once at init rather than via an effect.
+  const [supported] = useState(
+    () =>
+      typeof navigator !== 'undefined' &&
+      typeof navigator.mediaDevices?.getUserMedia === 'function' &&
+      typeof MediaRecorder !== 'undefined',
+  );
 
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -71,14 +78,6 @@ export function useRecorder(maxSeconds = 120): UseRecorderResult {
   const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const frameRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    const ok =
-      typeof navigator !== 'undefined' &&
-      typeof navigator.mediaDevices?.getUserMedia === 'function' &&
-      typeof MediaRecorder !== 'undefined';
-    setSupported(ok);
-  }, []);
 
   const teardown = useCallback(() => {
     if (tickRef.current) {
