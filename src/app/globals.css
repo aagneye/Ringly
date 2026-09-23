@@ -1,0 +1,121 @@
+@import 'tailwindcss';
+
+/*
+ * Ringly's visual language.
+ *
+ * Dark by default, because the product is used between calls on a phone and a
+ * bright white panel in a quiet office is conspicuous. The palette is narrow on
+ * purpose: one accent for the agent's voice, one warning colour for drift, and
+ * greys for everything else. A kanban board with six stage colours plus five
+ * health colours reads as noise, so stage is conveyed by position and health by
+ * a single bar.
+ */
+
+@theme {
+  --color-ink-950: #0a0b0e;
+  --color-ink-900: #11131a;
+  --color-ink-850: #171a23;
+  --color-ink-800: #1e222d;
+  --color-ink-700: #2a2f3d;
+  --color-ink-600: #3d4356;
+  --color-ink-400: #7a8299;
+  --color-ink-300: #9ba3b8;
+  --color-ink-200: #c4cad8;
+  --color-ink-50: #f2f4f8;
+
+  --color-accent-500: #5b8cff;
+  --color-accent-400: #7ba3ff;
+  --color-accent-300: #a3c0ff;
+
+  --color-warn-500: #f5a524;
+  --color-danger-500: #f04c4c;
+  --color-good-500: #2fbf71;
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+
+  --radius-card: 14px;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: var(--color-ink-950);
+  color: var(--color-ink-50);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  /* Safe-area padding so the record button is not under the iOS home bar. */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Visible focus for keyboard users, which the default dark theme loses. */
+:focus-visible {
+  outline: 2px solid var(--color-accent-400);
+  outline-offset: 2px;
+}
+
+/* Respect a user's reduced-motion preference for the recorder pulse. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes ringly-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+.ringly-pulse {
+  animation: ringly-pulse 1.6s ease-out infinite;
+}
+
+@keyframes ringly-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.ringly-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-ink-800) 25%,
+    var(--color-ink-700) 50%,
+    var(--color-ink-800) 75%
+  );
+  background-size: 200% 100%;
+  animation: ringly-shimmer 1.4s linear infinite;
+}
+
+/* Thin scrollbars on the kanban columns. */
+.ringly-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.ringly-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-ink-700);
+  border-radius: 3px;
+}
+.ringly-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
