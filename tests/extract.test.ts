@@ -102,7 +102,6 @@ describe('extractionSchema', () => {
   });
 
   it('rejects an invented pipeline stage', () => {
-    expect(extractionSchema.safeParse(extraction({ stage_guess: 'closing' as never }).success)).toBeDefined();
     expect(extractionSchema.safeParse({ ...extraction(), stage_guess: 'closing' }).success).toBe(
       false,
     );
