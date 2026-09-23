@@ -140,11 +140,12 @@ export function BriefingPanel({ briefing, loading, error, onRegenerate }: Briefi
 /** Thin wrapper over the Web Speech API, with a support probe. */
 export function useSpeech() {
   const [speaking, setSpeaking] = useState(false);
-  const [supported, setSupported] = useState(false);
-
-  useEffect(() => {
-    setSupported(typeof window !== 'undefined' && 'speechSynthesis' in window);
-  }, []);
+  // Read once at module scope rather than via a state-setting effect: this is a
+  // static feature check, not a synchronisation with an external system that
+  // can change over the component's lifetime.
+  const [supported] = useState(
+    () => typeof window !== 'undefined' && 'speechSynthesis' in window,
+  );
 
   const stop = useCallback(() => {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
