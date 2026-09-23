@@ -182,7 +182,15 @@ export function DealTimeline({
           empty="Nothing scheduled."
           render={(event) => (
             <li key={event.id} className="border-l-2 border-ink-800 pl-3">
-              <p className="text-sm text-ink-100">{event.title}</p>
+              <div className="flex items-baseline justify-between gap-2">
+                <p className="text-sm text-ink-100">{event.title}</p>
+                <a
+                  href={`/api/events/${event.id}/ics`}
+                  className="shrink-0 text-xs text-accent-400 underline"
+                >
+                  Add to calendar
+                </a>
+              </div>
               <p className="mt-0.5 text-xs text-ink-400">
                 {formatLongDate(new Date(event.startsAt), timezone)}
                 {event.location ? ` · ${event.location}` : ''}
