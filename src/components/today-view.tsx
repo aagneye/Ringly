@@ -75,6 +75,9 @@ export function TodayView({
   );
 
   useEffect(() => {
+    // Fetching the briefing on mount is the external-system synchronisation
+    // this effect exists for; see the matching comment in precall-brief.tsx.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void loadBriefing(false);
   }, [loadBriefing]);
 
