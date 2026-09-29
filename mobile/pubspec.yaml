@@ -40,6 +40,10 @@ dependencies:
   flutter_riverpod: 3.3.2
   riverpod_annotation: 4.0.3
 
+  # HTTP client. Interceptor support switches the base URL between the
+  # emulator host alias (10.0.2.2) and the deployed production API.
+  dio: 5.11.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
