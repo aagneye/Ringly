@@ -48,6 +48,12 @@ dependencies:
   # docs/flutter-migration-plan.md section 4.
   go_router: 17.0.0
 
+  # Typed API response models mirroring the Zod schemas in src/lib on the
+  # server. freezed_annotation/json_annotation are the runtime half; the
+  # code-generator dev dependencies are added separately.
+  freezed_annotation: 3.1.0
+  json_annotation: 4.9.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
