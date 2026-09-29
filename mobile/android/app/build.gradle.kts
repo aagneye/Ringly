@@ -24,7 +24,10 @@ android {
         applicationId = "com.ringly.ringly_mobile"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        // Raised from flutter's default (21): the record package (mic capture)
+        // declares minSdk 23, and the manifest merger requires the app's floor
+        // to be at least as high as any library it depends on.
+        minSdk = 23
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
