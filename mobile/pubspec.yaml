@@ -35,6 +35,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  # State management. Riverpod providers wrap each of the 13 API repositories
+  # (see docs/flutter-migration-plan.md section 2/3).
+  flutter_riverpod: 3.3.2
+  riverpod_annotation: 4.0.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
