@@ -56,8 +56,15 @@ dependencies:
 
   # Microphone capture for the recorder feature, plus the runtime permission
   # prompt required before Android grants RECORD_AUDIO.
+  #
+  # Pinned to the 11.x line deliberately: permission_handler 13.x pulls
+  # permission_handler_android 14.x, whose Gradle build script uses the newer
+  # `kotlin { compilerOptions { jvmTarget = ... } }` DSL that requires a newer
+  # Kotlin Gradle plugin than the flutter-create scaffold ships. 11.3.1 pulls
+  # permission_handler_android 12.x, which uses the older kotlinOptions DSL and
+  # builds cleanly against the generated Android project as-is.
   record: 6.2.1
-  permission_handler: 13.0.2
+  permission_handler: 11.3.1
 
 dev_dependencies:
   flutter_test:
