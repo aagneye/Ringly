@@ -76,18 +76,23 @@ review now" button on the Pipeline page.
 ## Architecture
 
 ```
-Browser (record UI, kanban, briefing)
-        │
+Android app (Flutter, mobile/) — record UI, kanban, briefing
+        │  HTTP (no secrets on the client)
         ▼
-Next.js 16 App Router — API routes orchestrate everything server-side
-so the Nebius key never reaches the browser
+Next.js 16 App Router — headless API only, orchestrates everything
+server-side so the Nebius key never reaches the client
         │
         ├──▶ Nebius Token Factory (Nemotron, OpenAI-compatible API)
         ├──▶ Postgres via Neon (Drizzle ORM)
         └──▶ Tavily (optional — company enrichment)
 ```
 
-Single Next.js app, TypeScript throughout, no separate backend. See
+The Next.js app is a headless API server — every route lives under
+[`src/app/api/`](./src/app/api/), there are no browser-facing pages. The
+client is the Flutter app in [`mobile/`](./mobile/). See
+[`docs/flutter-migration-plan.md`](./docs/flutter-migration-plan.md) for the
+full architecture decision record, the complete API contract, and the
+page-by-page feature mapping from the original web UI to the native app. See
 [`src/lib/db/schema/`](./src/lib/db/schema/) for the ten-table schema and
 [`src/lib/agent/`](./src/lib/agent/) for the agent loop, tools, and prompts.
 
@@ -104,7 +109,9 @@ npm run db:seed     # optional — adds one demo deal so the app isn't blank
 npm run dev
 ```
 
-Open http://localhost:3000.
+This starts the API only, at http://localhost:3000/api/*. To use the product,
+run the Flutter app in [`mobile/`](./mobile/) against it — see
+[`mobile/README.md`](./mobile/README.md).
 
 ### Environment variables
 
