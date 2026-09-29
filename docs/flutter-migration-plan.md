@@ -301,17 +301,27 @@ Grouped into phases; each bullet is one commit unless marked "(N commits)".
   a deletion-only commit since it's one logical removal)
 - `docs(readme): update README for headless-API architecture`
 
-**Phase B — Backend adjustments for headless mode (≈6 commits)**
-- `chore(next.config): drop unused page-only config if any`
-- `feat(api/health): confirm CORS/headers allow mobile client origin` (add
-  minimal CORS handling if Flutter web/dev needs it; Android native HTTP
-  calls don't need CORS, but keep this as a checked, deliberate commit)
-- `docs(api): document the 13-route contract inline` (only if not already
-  documented in code comments — check first, likely already satisfied)
+**Phase B — Backend adjustments for headless mode (≈3 commits, revised)**
+
+Three items from the original plan were checked and found unnecessary —
+documented here rather than silently dropped:
+- `next.config.ts` config (body size limit, security headers) all applies to
+  API routes too, not just pages. Nothing page-only to remove. **Skipped.**
+- CORS: native Android HTTP calls (Dio) are not subject to CORS — that's a
+  browser-enforced restriction, not a server one. Confirmed no existing CORS
+  code in `src/` (`grep` for `Access-Control|cors|CORS` returned zero
+  matches) — there is nothing to add for a native client. **Skipped.**
+- API-route-level smoke tests: the existing suite deliberately tests only
+  pure logic with no network/database (per README), not route handlers.
+  Adding route-handler tests would need a different mocking setup than the
+  rest of `tests/` uses. Left as a follow-up, not forced in to hit a count.
+  **Skipped.**
+
+Commits actually done:
 - `chore(env): add mobile-facing env var documentation to .env.example`
-- `test(api): add smoke test hitting each route with missing config` (only if
-  gap exists after checking `tests/`)
-- `chore(ci): update workflow if page-removal breaks a build step`
+- `docs(readme): update README for headless-API architecture`
+- `chore(ci): update workflow if page-removal breaks a build step` (only if
+  CI actually breaks — checked against `.github/workflows/ci.yml`)
 
 **Phase C — Flutter project scaffold (≈12 commits)**
 - `chore(mobile): flutter create mobile project`
