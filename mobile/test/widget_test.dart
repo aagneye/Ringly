@@ -5,7 +5,6 @@
 // docs/flutter-migration-plan.md section 6, "flutter test passing after each
 // feature phase").
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
