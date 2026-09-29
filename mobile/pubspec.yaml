@@ -44,6 +44,10 @@ dependencies:
   # emulator host alias (10.0.2.2) and the deployed production API.
   dio: 5.11.1
 
+  # Navigation. Named routes map 1:1 to the page list in
+  # docs/flutter-migration-plan.md section 4.
+  go_router: 17.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
