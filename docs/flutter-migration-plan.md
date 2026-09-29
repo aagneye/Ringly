@@ -323,11 +323,25 @@ Commits actually done:
 - `chore(ci): update workflow if page-removal breaks a build step` (only if
   CI actually breaks — checked against `.github/workflows/ci.yml`)
 
-**Phase C — Flutter project scaffold (≈12 commits)**
+**Phase C — Flutter project scaffold (≈12 commits, versions corrected during implementation)**
+
+Exact dependency versions actually pinned (resolved against Flutter 3.32.2 /
+Dart 3.8.1 via `flutter pub add --dry-run` and `flutter pub get`, not guessed):
+`flutter_riverpod 3.3.2`, `riverpod_annotation 4.0.3`, `dio 5.11.1`,
+`go_router 17.0.0`, `freezed_annotation 3.1.0`, `json_annotation 4.9.0`,
+`record 6.2.1`, `permission_handler 13.0.2`. Dev: `flutter_lints ^5.0.0`
+(unchanged from scaffold), `build_runner 2.7.1` (not 2.15.x — that range
+requires `build >=4.0.8` which needs Dart SDK `>=3.11.0`, newer than this
+project's `3.8.1`, and separately conflicts with `flutter_test`'s bundled
+`test_api` version; resolved by following pub's own downgrade suggestion),
+`freezed 3.2.3`, `json_serializable 6.11.2`.
 - `chore(mobile): flutter create mobile project`
-- `chore(mobile): add riverpod, dio, go_router, freezed, json_serializable
-  dependencies to pubspec.yaml` (split into 5 commits, one dependency
-  family each, per the "config committed independently" rule)
+- `chore(mobile): add riverpod state management dependencies to pubspec.yaml`
+- `chore(mobile): add dio HTTP client dependency to pubspec.yaml`
+- `chore(mobile): add go_router navigation dependency to pubspec.yaml`
+- `chore(mobile): add freezed and json_annotation dependencies to pubspec.yaml`
+- `chore(mobile): add record and permission_handler dependencies to pubspec.yaml`
+- `chore(mobile): add build_runner, freezed, json_serializable dev dependencies`
 - `chore(mobile): configure build_runner for freezed/json_serializable`
 - `feat(mobile/core): add env.dart with emulator/prod base URL constants`
 - `feat(mobile/core): add api_client.dart Dio instance with interceptors`
