@@ -343,6 +343,12 @@ project's `3.8.1`, and separately conflicts with `flutter_test`'s bundled
 - `chore(mobile): add record and permission_handler dependencies to pubspec.yaml`
 - `chore(mobile): add build_runner, freezed, json_serializable dev dependencies`
 - `chore(mobile): configure build_runner for freezed/json_serializable`
+  — **checked and skipped**: freezed and json_serializable ship their own
+  default builder configuration; a custom `build.yaml` is only needed to
+  override non-default behavior (e.g. custom part-file naming), which this
+  project doesn't need. Each model file declares
+  `part 'x.freezed.dart'; part 'x.g.dart';` directly — that's the entire
+  setup required.
 - `feat(mobile/core): add env.dart with emulator/prod base URL constants`
 - `feat(mobile/core): add api_client.dart Dio instance with interceptors`
 - `feat(mobile/core): add errors.dart typed exception hierarchy`
