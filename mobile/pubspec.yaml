@@ -70,6 +70,12 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
 
+  # Code generators for the freezed/json_annotation models added above. Run
+  # via `dart run build_runner build` after editing any model in lib/models/.
+  build_runner: 2.7.1
+  freezed: 3.2.3
+  json_serializable: 6.11.2
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
