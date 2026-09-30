@@ -8,6 +8,7 @@ import 'features/home/home_screen.dart';
 import 'features/memo/memo_result_screen.dart';
 import 'features/models/models_screen.dart';
 import 'features/recorder/recorder_screen.dart';
+import 'features/settings/settings_screen.dart';
 import 'features/shared/widgets/app_shell.dart';
 import 'features/shared/widgets/placeholder_page.dart';
 
@@ -100,7 +101,7 @@ GoRouter createRouter({String initialLocation = '/login'}) => GoRouter(
     GoRoute(
       path: '/settings',
       name: AppRoutes.settings,
-      builder: (context, state) => const PlaceholderPage(title: 'Settings'),
+      builder: (context, state) => const SettingsScreen(),
     ),
   ],
 );

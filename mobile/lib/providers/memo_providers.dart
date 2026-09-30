@@ -6,6 +6,7 @@ import '../core/audio/silence_trimmer.dart';
 import '../data/memo/local_memo.dart';
 import '../data/memo/local_memo_store.dart';
 import '../features/recorder/audio_capture.dart';
+import 'settings_providers.dart';
 
 /// "Now", injectable so timers and backoff can be tested deterministically.
 final clockProvider = Provider<DateTime Function()>((ref) => DateTime.now);
@@ -28,8 +29,9 @@ final micPermissionProvider = Provider<MicPermission>(
 );
 
 /// Trims silence from recordings before they are saved. Null disables
-/// trimming (the setting to turn it off arrives with the settings screen).
-final silenceTrimmerProvider = Provider<SilenceTrimmer?>((ref) => const SilenceTrimmer());
+/// trimming, driven by the "auto-trim silence" toggle in settings.
+final silenceTrimmerProvider = Provider<SilenceTrimmer?>((ref) =>
+    ref.watch(currentSettingsProvider).autoTrimSilence ? const SilenceTrimmer() : null);
 
 /// Every memo on the device, newest first. Invalidate after any write.
 final memosProvider = FutureProvider<List<LocalMemo>>((ref) async {
