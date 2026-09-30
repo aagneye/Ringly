@@ -40,6 +40,15 @@ class TierUsage {
   int get totalTokens => promptTokens + completionTokens;
 }
 
+/// Short product name for a tier, e.g. REASONING → "Ultra".
+String tierShortName(String tier) => switch (tier) {
+      'FAST' => 'Lightning',
+      'BALANCED' => 'Super',
+      'REASONING' => 'Ultra',
+      'OMNI' => 'Omni',
+      _ => tier,
+    };
+
 /// One recent model call, newest first.
 class RecentTrace {
   const RecentTrace({
