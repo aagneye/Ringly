@@ -168,18 +168,37 @@ class RecorderController extends Notifier<RecorderState> {
         return null;
       }
 
+      var savedDuration = duration;
+      final trimmer = ref.read(silenceTrimmerProvider);
+      if (trimmer != null) {
+        final file = File(path);
+        final result = trimmer.trimWav(await file.readAsBytes());
+        if (result.silent) {
+          await _deleteQuietly(path);
+          state = const RecorderState(
+            phase: RecorderPhase.error,
+            error: 'Nothing was audible in that recording. Try again somewhere quieter.',
+          );
+          return null;
+        }
+        if (result.changed) {
+          await file.writeAsBytes(result.bytes, flush: true);
+          savedDuration = result.trimmed;
+        }
+      }
+
       final memo = LocalMemo(
         id: id,
         createdAt: startedAt,
         status: MemoStatus.pending,
         audioPath: path,
-        durationMs: duration.inMilliseconds,
+        durationMs: savedDuration.inMilliseconds,
       );
       final store = await ref.read(memoStoreProvider.future);
       await store.save(memo);
       ref.invalidate(memosProvider);
 
-      state = RecorderState(phase: RecorderPhase.saved, elapsed: duration, savedMemo: memo);
+      state = RecorderState(phase: RecorderPhase.saved, elapsed: savedDuration, savedMemo: memo);
       return memo;
     } catch (error) {
       state = RecorderState(
