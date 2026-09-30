@@ -12,11 +12,15 @@ class FakeCapture implements AudioCapture {
   String? path;
   bool cancelled = false;
 
+  /// Bytes written as the "recording". Defaults to a non-WAV stub, which the
+  /// silence trimmer leaves untouched.
+  List<int> content = List.filled(64, 0);
+
   @override
   Future<void> start(String path) async {
     this.path = path;
     await File(path).create(recursive: true);
-    await File(path).writeAsBytes(List.filled(64, 0));
+    await File(path).writeAsBytes(content);
   }
 
   @override
