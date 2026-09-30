@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'core/theme/app_theme.dart';
 import 'features/auth/screens/login_screen.dart';
 import 'features/auth/screens/signup_screen.dart';
-import 'features/dashboard/screens/dashboard_screen.dart';
+import 'features/home/home_screen.dart';
 import 'features/shared/widgets/app_shell.dart';
 import 'features/shared/widgets/placeholder_page.dart';
 
@@ -54,7 +54,7 @@ GoRouter createRouter({String initialLocation = '/login'}) => GoRouter(
     GoRoute(
       path: '/home',
       name: AppRoutes.home,
-      builder: (context, state) => const AppShell(child: DashboardScreen()),
+      builder: (context, state) => const AppShell(child: HomeScreen()),
     ),
     GoRoute(
       path: '/pipeline',
