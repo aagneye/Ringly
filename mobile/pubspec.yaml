@@ -71,6 +71,21 @@ dependencies:
   # nothing.
   path_provider: 2.1.5
 
+  # Persisted settings (transcription mode, local-only, auto-trim).
+  shared_preferences: 2.5.3
+
+  # Approving a draft hands it to the user's own mail client via mailto:.
+  url_launcher: 6.3.2
+
+  # Offline outbox: drain queued memos when connectivity returns.
+  connectivity_plus: 6.1.4
+
+  # SHA-256 verification of downloaded on-device Whisper models.
+  crypto: 3.0.7
+
+  # Match spoken names ("I talked to Priya") against the phone's contacts.
+  flutter_contacts: 1.1.9+2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
