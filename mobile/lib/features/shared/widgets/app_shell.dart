@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../providers/outbox_providers.dart';
 import '../../../providers/pending_actions_provider.dart';
 import 'app_drawer.dart';
 import 'circular_menu_button.dart';
@@ -22,6 +23,8 @@ class AppShell extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final index = navIndexForPath(GoRouterState.of(context).uri.path);
     final badge = ref.watch(pendingActionsCountProvider);
+    // Keep the offline outbox draining for the app's lifetime.
+    ref.watch(outboxStarterProvider);
 
     return Scaffold(
       drawer: const AppDrawer(),
