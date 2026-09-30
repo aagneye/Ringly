@@ -3,7 +3,10 @@ import '../core/api_client.dart';
 import '../core/env.dart';
 import '../data/repositories/briefing_repository.dart';
 import '../data/repositories/deals_repository.dart';
+import '../data/repositories/drafts_repository.dart';
 import '../data/repositories/health_repository.dart';
+import '../data/repositories/notes_repository.dart';
+import '../data/repositories/reminders_repository.dart';
 import '../data/repositories/today_repository.dart';
 import '../data/repositories/usage_repository.dart';
 
@@ -35,4 +38,16 @@ final usageRepositoryProvider = Provider<UsageRepository>(
 
 final briefingRepositoryProvider = Provider<BriefingRepository>(
   (ref) => BriefingRepository(ref.watch(apiClientProvider)),
+);
+
+final notesRepositoryProvider = Provider<NotesRepository>(
+  (ref) => NotesRepository(ref.watch(apiClientProvider)),
+);
+
+final draftsRepositoryProvider = Provider<DraftsRepository>(
+  (ref) => DraftsRepository(ref.watch(apiClientProvider)),
+);
+
+final remindersRepositoryProvider = Provider<RemindersRepository>(
+  (ref) => RemindersRepository(ref.watch(apiClientProvider)),
 );
