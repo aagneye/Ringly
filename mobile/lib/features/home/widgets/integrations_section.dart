@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../data/models/health.dart';
+import '../../../providers/contacts_providers.dart';
 import '../../../providers/data_providers.dart';
 import '../../../providers/outbox_providers.dart';
 import 'home_section.dart';
@@ -70,13 +71,17 @@ List<IntegrationStatus> integrationsFor(
 
 /// Which integrations are live, plus anything waiting to sync.
 class IntegrationsSection extends ConsumerWidget {
-  const IntegrationsSection({super.key, this.contactsConnected = false});
+  const IntegrationsSection({super.key, this.contactsConnected});
 
-  final bool contactsConnected;
+  /// Whether the phone's contacts are readable. When null, the section reads
+  /// [contactsConnectedProvider] itself, so callers don't have to thread it
+  /// through; a non-null value (used in tests) overrides the provider.
+  final bool? contactsConnected;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pending = ref.watch(pendingOutboxCountProvider);
+    final bool connected = contactsConnected ?? ref.watch(contactsConnectedProvider);
     return HomeSection(
       title: 'Integrations',
       child: Column(
@@ -88,7 +93,7 @@ class IntegrationsSection extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: Column(
                 children: [
-                  for (final row in integrationsFor(health, contactsConnected: contactsConnected))
+                  for (final row in integrationsFor(health, contactsConnected: connected))
                     ListTile(
                       dense: true,
                       leading: Icon(row.icon, color: AppColors.textSecondary),

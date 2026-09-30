@@ -10,6 +10,7 @@ import '../../data/models/memo_result.dart';
 import '../../data/models/usage.dart';
 import '../../providers/api_providers.dart';
 import '../../providers/data_providers.dart';
+import '../contacts/contact_suggestion.dart';
 import 'submission_controller.dart';
 import 'widgets/action_tile.dart';
 
@@ -218,6 +219,7 @@ class _ResultViewState extends ConsumerState<_ResultView> {
           ),
         const SizedBox(height: 16),
         _TargetCard(target: result.target),
+        ContactSuggestion(target: result.target, extraction: result.extraction),
         if (result.actions.isNotEmpty) ...[
           const SizedBox(height: 20),
           Text('Actions', style: textTheme.titleMedium),

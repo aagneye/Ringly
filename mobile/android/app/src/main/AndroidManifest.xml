@@ -4,6 +4,9 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- Voice memos. Requested at runtime on first record, with a rationale. -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <!-- Match spoken names against the phone's contacts. Read-only, requested
+         at runtime the first time a memo needs a name resolved. -->
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <application
         android:label="ringly_mobile"
         android:name="${applicationName}"
