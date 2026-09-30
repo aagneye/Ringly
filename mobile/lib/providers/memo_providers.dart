@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
+import '../core/audio/silence_trimmer.dart';
 import '../data/memo/local_memo.dart';
 import '../data/memo/local_memo_store.dart';
 import '../features/recorder/audio_capture.dart';
@@ -25,6 +26,10 @@ final audioCaptureProvider = Provider<AudioCapture>((ref) {
 final micPermissionProvider = Provider<MicPermission>(
   (ref) => const PlatformMicPermission(),
 );
+
+/// Trims silence from recordings before they are saved. Null disables
+/// trimming (the setting to turn it off arrives with the settings screen).
+final silenceTrimmerProvider = Provider<SilenceTrimmer?>((ref) => const SilenceTrimmer());
 
 /// Every memo on the device, newest first. Invalidate after any write.
 final memosProvider = FutureProvider<List<LocalMemo>>((ref) async {
