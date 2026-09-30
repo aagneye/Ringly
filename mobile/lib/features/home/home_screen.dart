@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import '../../app.dart';
 import '../../core/format.dart';
 import '../../providers/data_providers.dart';
+import '../recorder/widgets/recent_memos_list.dart';
 import 'widgets/ai_activity_section.dart';
 import 'widgets/briefing_card.dart';
+import 'widgets/home_section.dart';
 import 'widgets/integrations_section.dart';
 import 'widgets/needs_you_card.dart';
 import 'widgets/pipeline_pulse_section.dart';
@@ -53,6 +57,12 @@ class HomeScreen extends ConsumerWidget {
           const PipelinePulseSection(),
           const IntegrationsSection(),
           const AiActivitySection(),
+          HomeSection(
+            title: 'Recent memos',
+            actionLabel: 'Record',
+            onAction: () => context.goNamed(AppRoutes.recorder),
+            child: const RecentMemosList(limit: 3),
+          ),
         ],
       ),
     );
