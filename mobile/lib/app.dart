@@ -4,6 +4,7 @@ import 'core/theme/app_theme.dart';
 import 'features/auth/screens/login_screen.dart';
 import 'features/auth/screens/signup_screen.dart';
 import 'features/home/home_screen.dart';
+import 'features/recorder/recorder_screen.dart';
 import 'features/shared/widgets/app_shell.dart';
 import 'features/shared/widgets/placeholder_page.dart';
 
@@ -66,9 +67,7 @@ GoRouter createRouter({String initialLocation = '/login'}) => GoRouter(
     GoRoute(
       path: '/recorder',
       name: AppRoutes.recorder,
-      builder: (context, state) => const AppShell(
-        child: PlaceholderPage(title: 'Record a memo'),
-      ),
+      builder: (context, state) => const AppShell(child: RecorderScreen()),
     ),
     GoRoute(
       path: '/actions',
