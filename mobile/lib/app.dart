@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'core/theme/app_theme.dart';
+import 'features/auth/screens/login_screen.dart';
+import 'features/auth/screens/signup_screen.dart';
 import 'features/shared/widgets/app_shell.dart';
 
 /// Route names, defined once so every `context.goNamed(...)` call in the app
@@ -22,8 +24,18 @@ abstract final class AppRoutes {
 /// until its feature phase (G–L in the migration plan) replaces it — kept
 /// buildable at every commit rather than left half-wired.
 final GoRouter appRouter = GoRouter(
-  initialLocation: '/today',
+  initialLocation: '/login',
   routes: [
+    GoRoute(
+      path: '/login',
+      name: AppRoutes.login,
+      builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: '/signup',
+      name: AppRoutes.signup,
+      builder: (context, state) => const SignupScreen(),
+    ),
     GoRoute(
       path: '/today',
       name: AppRoutes.today,
