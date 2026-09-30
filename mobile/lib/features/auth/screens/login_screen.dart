@@ -133,8 +133,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: _submit,
                     ),
                     const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Wrap(
+                      alignment: WrapAlignment.center,
                       children: [
                         Text(
                           "Don't have an account? ",
