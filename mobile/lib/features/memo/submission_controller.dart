@@ -4,6 +4,7 @@ import '../../data/memo/local_memo_store.dart';
 import '../../providers/api_providers.dart';
 import '../../providers/data_providers.dart';
 import '../../providers/memo_providers.dart';
+import '../../providers/transcription_providers.dart';
 import 'memo_sender.dart';
 
 /// Progress of the memo currently being sent from this screen session.
@@ -22,6 +23,7 @@ class SubmissionState {
 final memoSenderProvider = FutureProvider<MemoSender>((ref) async => MemoSender(
       store: await ref.watch(memoStoreProvider.future),
       notes: ref.watch(notesRepositoryProvider),
+      prepare: ref.watch(memoPrepareProvider),
     ));
 
 /// One stored memo by id, re-read whenever the memo list changes.
