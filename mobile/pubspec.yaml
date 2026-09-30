@@ -66,6 +66,11 @@ dependencies:
   record: 6.2.1
   permission_handler: 11.3.1
 
+  # App support directory for the local-first memo store: every recording is
+  # written to disk before any network call, so a crash mid-upload loses
+  # nothing.
+  path_provider: 2.1.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
