@@ -2,6 +2,8 @@
     <!-- Release builds only get network access when it is declared; the debug
          manifest adds it implicitly, which hides the omission until release. -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Voice memos. Requested at runtime on first record, with a rationale. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <application
         android:label="ringly_mobile"
         android:name="${applicationName}"
