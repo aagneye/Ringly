@@ -23,6 +23,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _submitting = false;
 
+  // Mock demo credentials. The backend has no login endpoint yet, so login is
+  // gated on these hardcoded values purely so the dashboard can be reached
+  // during a demo. Replace with a real auth call once the API exists.
+  static const _demoEmail = 'test123@gmail.com';
+  static const _demoPassword = 'test123';
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -34,11 +40,21 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _submitting = true);
     // Mock auth: no backend call. Brief delay so the button's loading state is
-    // visible, then route to the dashboard.
+    // visible, then check the demo credentials.
     await Future<void>.delayed(const Duration(milliseconds: 500));
     if (!mounted) return;
     setState(() => _submitting = false);
-    context.goNamed(AppRoutes.dashboard);
+
+    final emailMatches =
+        _emailController.text.trim().toLowerCase() == _demoEmail;
+    final passwordMatches = _passwordController.text == _demoPassword;
+    if (emailMatches && passwordMatches) {
+      context.goNamed(AppRoutes.dashboard);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Incorrect email or password.')),
+      );
+    }
   }
 
   @override
@@ -61,6 +77,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       'Sign in to pick up where you left off.',
                       style: textTheme.bodySmall,
+                    ),
+                    const SizedBox(height: 12),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.surfaceMuted,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        'Demo login — test123@gmail.com / test123',
+                        style: textTheme.bodySmall,
+                      ),
                     ),
                     const SizedBox(height: 32),
                     AppTextField(
