@@ -4,6 +4,7 @@ import 'core/theme/app_theme.dart';
 import 'features/auth/screens/login_screen.dart';
 import 'features/auth/screens/signup_screen.dart';
 import 'features/home/home_screen.dart';
+import 'features/memo/memo_result_screen.dart';
 import 'features/recorder/recorder_screen.dart';
 import 'features/shared/widgets/app_shell.dart';
 import 'features/shared/widgets/placeholder_page.dart';
@@ -82,6 +83,12 @@ GoRouter createRouter({String initialLocation = '/login'}) => GoRouter(
       builder: (context, state) => const AppShell(
         child: PlaceholderPage(title: 'Models'),
       ),
+    ),
+    // Full-screen detail with its own back button, outside the tab shell.
+    GoRoute(
+      path: '/memo/:id',
+      name: AppRoutes.memoResult,
+      builder: (context, state) => MemoResultScreen(memoId: state.pathParameters['id']!),
     ),
   ],
 );
