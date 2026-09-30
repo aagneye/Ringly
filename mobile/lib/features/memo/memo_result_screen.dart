@@ -331,7 +331,10 @@ class _TargetCard extends StatelessWidget {
           style: textTheme.bodySmall,
         ),
         trailing: const Icon(Icons.chevron_right, color: AppColors.textSecondary),
-        onTap: () => context.goNamed(AppRoutes.pipeline),
+        onTap: () => context.pushNamed(
+          AppRoutes.dealDetail,
+          pathParameters: {'id': target.dealId},
+        ),
       ),
     );
   }

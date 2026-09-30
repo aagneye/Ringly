@@ -50,18 +50,24 @@ class PipelinePulseSection extends ConsumerWidget {
                   for (final deal in quiet)
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Icon(Icons.trending_down, size: 18, color: AppColors.accent),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              '${deal.contactName} — ${deal.topSignal?.explanation ?? deal.title}',
-                              style: textTheme.bodyMedium,
+                      child: InkWell(
+                        onTap: () => context.pushNamed(
+                          AppRoutes.dealDetail,
+                          pathParameters: {'id': deal.id},
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Icon(Icons.trending_down, size: 18, color: AppColors.accent),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                '${deal.contactName} — ${deal.topSignal?.explanation ?? deal.title}',
+                                style: textTheme.bodyMedium,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                 ],

@@ -4,9 +4,11 @@ import 'core/theme/app_theme.dart';
 import 'features/actions/actions_screen.dart';
 import 'features/auth/screens/login_screen.dart';
 import 'features/auth/screens/signup_screen.dart';
+import 'features/deal_detail/deal_detail_screen.dart';
 import 'features/home/home_screen.dart';
 import 'features/memo/memo_result_screen.dart';
 import 'features/models/models_screen.dart';
+import 'features/pipeline/pipeline_screen.dart';
 import 'features/recorder/recorder_screen.dart';
 import 'features/settings/settings_screen.dart';
 import 'features/shared/widgets/app_shell.dart';
@@ -64,9 +66,7 @@ GoRouter createRouter({String initialLocation = '/login'}) => GoRouter(
     GoRoute(
       path: '/pipeline',
       name: AppRoutes.pipeline,
-      builder: (context, state) => const AppShell(
-        child: PlaceholderPage(title: 'Pipeline'),
-      ),
+      builder: (context, state) => const AppShell(child: PipelineScreen()),
     ),
     GoRoute(
       path: '/recorder',
@@ -94,7 +94,7 @@ GoRouter createRouter({String initialLocation = '/login'}) => GoRouter(
     GoRoute(
       path: '/deal/:id',
       name: AppRoutes.dealDetail,
-      builder: (context, state) => const PlaceholderPage(title: 'Deal'),
+      builder: (context, state) => DealDetailScreen(dealId: state.pathParameters['id']!),
     ),
 
     // Full-screen: grouped settings, opened from the drawer.
