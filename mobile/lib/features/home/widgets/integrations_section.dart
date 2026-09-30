@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../data/models/health.dart';
 import '../../../providers/data_providers.dart';
+import '../../../providers/outbox_providers.dart';
 import 'home_section.dart';
 
 /// One connection row: what it is, and whether it's live.
@@ -75,29 +76,44 @@ class IntegrationsSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final pending = ref.watch(pendingOutboxCountProvider);
     return HomeSection(
       title: 'Integrations',
-      child: AsyncSectionBody<HealthStatus>(
-        value: ref.watch(healthProvider),
-        builder: (health) => SectionCard(
-          padding: const EdgeInsets.symmetric(vertical: 4),
-          child: Column(
-            children: [
-              for (final row in integrationsFor(health, contactsConnected: contactsConnected))
-                ListTile(
-                  dense: true,
-                  leading: Icon(row.icon, color: AppColors.textSecondary),
-                  title: Text(row.name, style: Theme.of(context).textTheme.bodyMedium),
-                  subtitle: Text(row.detail, style: Theme.of(context).textTheme.bodySmall),
-                  trailing: Icon(
-                    row.connected ? Icons.check_circle : Icons.radio_button_unchecked,
-                    size: 20,
-                    color: row.connected ? AppColors.accent : AppColors.textSecondary,
-                  ),
-                ),
-            ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          AsyncSectionBody<HealthStatus>(
+            value: ref.watch(healthProvider),
+            builder: (health) => SectionCard(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Column(
+                children: [
+                  for (final row in integrationsFor(health, contactsConnected: contactsConnected))
+                    ListTile(
+                      dense: true,
+                      leading: Icon(row.icon, color: AppColors.textSecondary),
+                      title: Text(row.name, style: Theme.of(context).textTheme.bodyMedium),
+                      subtitle: Text(row.detail, style: Theme.of(context).textTheme.bodySmall),
+                      trailing: Icon(
+                        row.connected ? Icons.check_circle : Icons.radio_button_unchecked,
+                        size: 20,
+                        color: row.connected ? AppColors.accent : AppColors.textSecondary,
+                      ),
+                    ),
+                ],
+              ),
+            ),
           ),
-        ),
+          if (pending > 0) ...[
+            const SizedBox(height: 8),
+            SectionNotice(
+              icon: Icons.cloud_upload_outlined,
+              message: pending == 1
+                  ? '1 memo waiting to sync'
+                  : '$pending memos waiting to sync',
+            ),
+          ],
+        ],
       ),
     );
   }
