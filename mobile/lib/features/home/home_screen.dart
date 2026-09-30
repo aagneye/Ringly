@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../app.dart';
 import '../../core/format.dart';
 import '../../providers/data_providers.dart';
+import '../deal_detail/widgets/precall_brief_sheet.dart';
 import '../memo/memo_result_screen.dart';
 import '../recorder/widgets/recent_memos_list.dart';
 import 'widgets/ai_activity_section.dart';
@@ -53,7 +54,9 @@ class HomeScreen extends ConsumerWidget {
           const SizedBox(height: 20),
           const BriefingCard(),
           const NeedsYouCard(),
-          const TodaysCallsSection(),
+          TodaysCallsSection(
+            onBriefMe: (event) => showPrecallBrief(context, event.dealId),
+          ),
           const QuickRecordCard(),
           const PipelinePulseSection(),
           const IntegrationsSection(),
