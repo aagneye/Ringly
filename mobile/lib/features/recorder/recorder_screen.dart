@@ -1,9 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/format.dart';
 import '../../core/theme/app_colors.dart';
+import '../memo/memo_result_screen.dart';
+import '../memo/submission_controller.dart';
 import 'recorder_controller.dart';
 import 'widgets/recent_memos_list.dart';
+import 'widgets/text_note_sheet.dart';
 import 'widgets/waveform.dart';
 
 /// The core loop: tap, talk for a minute, tap again.
@@ -44,7 +49,9 @@ class RecorderScreen extends ConsumerWidget {
                   recording: state.isRecording,
                   busy: state.phase == RecorderPhase.requestingPermission ||
                       state.phase == RecorderPhase.stopping,
-                  onPressed: state.isRecording ? controller.stop : controller.start,
+                  onPressed: state.isRecording
+                      ? () => _stopAndSend(context, ref)
+                      : controller.start,
                 ),
                 const SizedBox(height: 16),
                 Text(_hint(state), textAlign: TextAlign.center, style: textTheme.bodySmall),
@@ -52,6 +59,12 @@ class RecorderScreen extends ConsumerWidget {
                   TextButton(
                     onPressed: controller.cancel,
                     child: const Text('Discard'),
+                  )
+                else
+                  TextButton.icon(
+                    onPressed: () => _typeNote(context, ref),
+                    icon: const Icon(Icons.keyboard_outlined, size: 18),
+                    label: const Text('Type a note instead'),
                   ),
               ],
             ),
@@ -69,9 +82,28 @@ class RecorderScreen extends ConsumerWidget {
         const SizedBox(height: 28),
         Text('Recent memos', style: textTheme.titleMedium),
         const SizedBox(height: 8),
-        const RecentMemosList(),
+        RecentMemosList(onOpen: (memo) => openMemoResult(context, memo)),
       ],
     );
+  }
+
+  /// Stop, then hand off: the memo is already on disk, so sending runs in the
+  /// background while the result screen shows progress.
+  static Future<void> _stopAndSend(BuildContext context, WidgetRef ref) async {
+    final memo = await ref.read(recorderControllerProvider.notifier).stop();
+    if (memo == null || !context.mounted) return;
+    unawaited(ref.read(submissionControllerProvider.notifier).submit(memo));
+    ref.read(recorderControllerProvider.notifier).reset();
+    openMemoResult(context, memo);
+  }
+
+  static Future<void> _typeNote(BuildContext context, WidgetRef ref) async {
+    final text = await showTextNoteSheet(context);
+    if (text == null || !context.mounted) return;
+    final submission = ref.read(submissionControllerProvider.notifier);
+    final memo = await submission.saveTextNote(text);
+    unawaited(submission.submit(memo));
+    if (context.mounted) openMemoResult(context, memo);
   }
 
   static String _hint(RecorderState state) => switch (state.phase) {
