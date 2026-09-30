@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'core/theme/app_theme.dart';
 import 'features/shared/widgets/app_shell.dart';
 
 /// Route names, defined once so every `context.goNamed(...)` call in the app
@@ -74,7 +75,7 @@ class RinglyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Ringly',
-      theme: ThemeData(colorSchemeSeed: Colors.indigo, useMaterial3: true),
+      theme: AppTheme.light(),
       routerConfig: appRouter,
     );
   }
