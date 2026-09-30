@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _emailController.text.trim().toLowerCase() == _demoEmail;
     final passwordMatches = _passwordController.text == _demoPassword;
     if (emailMatches && passwordMatches) {
-      context.goNamed(AppRoutes.dashboard);
+      context.goNamed(AppRoutes.home);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Incorrect email or password.')),
