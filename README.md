@@ -67,6 +67,17 @@ throughout, with a loose-parsing fallback
 ([`src/lib/nebius/json.ts`](./src/lib/nebius/json.ts)) for the cases where a
 model wraps JSON in markdown or a `<think>` block anyway.
 
+**What runs on the phone, and what never does.** The Android app records,
+trims silence on-device, and keeps an offline outbox. It can also transcribe
+on the phone as an option (off by default, and not active in this build: see
+[`docs/on-device-transcription.md`](./docs/on-device-transcription.md)).
+Every reasoning step stays on Nemotron via Token Factory, whichever mode is
+on: extraction, tool planning, drafting, briefs, and the reviews. Nemotron is
+not shrunk to fit a phone. Even Nemotron 3 Nano 4B targets Jetson and RTX
+hardware, so "the phone does the ears, Nebius does the thinking" is the design.
+The app's **Models** tab shows live per-tier counts from `/api/usage`, and every
+memo's result screen shows which tier handled each step.
+
 **Other Nebius services**: the nightly review (`POST /api/review`) is designed
 to be triggered by **Nebius Serverless Jobs** on a schedule — it's a single
 guarded HTTP endpoint, so wiring it to a Nebius scheduled job is a config
