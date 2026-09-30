@@ -13,7 +13,9 @@ import nextPlugin from 'eslint-config-next';
 const eslintConfig = [
   ...nextPlugin,
   {
-    ignores: ['.next/**', 'node_modules/**', 'coverage/**', 'drizzle/**'],
+    // mobile/ is the Flutter app: its build/ output contains generated JS
+    // (CanvasKit) that is not ours to lint.
+    ignores: ['.next/**', 'node_modules/**', 'coverage/**', 'drizzle/**', 'mobile/**'],
   },
 ];
 
