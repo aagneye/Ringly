@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../app.dart';
 import '../../core/format.dart';
 import '../../providers/data_providers.dart';
+import '../memo/memo_result_screen.dart';
 import '../recorder/widgets/recent_memos_list.dart';
 import 'widgets/ai_activity_section.dart';
 import 'widgets/briefing_card.dart';
@@ -61,7 +62,7 @@ class HomeScreen extends ConsumerWidget {
             title: 'Recent memos',
             actionLabel: 'Record',
             onAction: () => context.goNamed(AppRoutes.recorder),
-            child: const RecentMemosList(limit: 3),
+            child: RecentMemosList(limit: 3, onOpen: (memo) => openMemoResult(context, memo)),
           ),
         ],
       ),
