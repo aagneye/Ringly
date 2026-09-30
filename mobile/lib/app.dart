@@ -13,6 +13,10 @@ abstract final class AppRoutes {
   static const login = 'login';
   static const signup = 'signup';
   static const dashboard = 'dashboard';
+  static const home = 'home';
+  static const actions = 'actions';
+  static const settings = 'settings';
+  static const memoResult = 'memo-result';
   static const today = 'today';
   static const pipeline = 'pipeline';
   static const recorder = 'recorder';
