@@ -14,6 +14,7 @@ class NavDestinationSpec {
     required this.label,
     required this.routeName,
     required this.location,
+    this.isPrimary = false,
   });
 
   final IconData icon;
@@ -21,16 +22,23 @@ class NavDestinationSpec {
   final String label;
   final String routeName;
   final String location;
+
+  /// The raised centre action (Record). Rendered as a circular accent button
+  /// instead of a flat tab, because capture is the core loop of the product.
+  final bool isPrimary;
 }
 
-/// The four top-level destinations shown in the bottom nav bar, in order.
+/// The five top-level destinations shown in the bottom nav bar, in order.
+///
+/// Record sits in the centre so it is always one thumb-tap away. Actions is
+/// the approval queue — the only place irreversible things happen.
 const List<NavDestinationSpec> kNavDestinations = [
   NavDestinationSpec(
-    icon: Icons.today_outlined,
-    selectedIcon: Icons.today,
-    label: 'Today',
-    routeName: AppRoutes.today,
-    location: '/today',
+    icon: Icons.home_outlined,
+    selectedIcon: Icons.home,
+    label: 'Home',
+    routeName: AppRoutes.home,
+    location: '/home',
   ),
   NavDestinationSpec(
     icon: Icons.view_kanban_outlined,
@@ -45,6 +53,14 @@ const List<NavDestinationSpec> kNavDestinations = [
     label: 'Record',
     routeName: AppRoutes.recorder,
     location: '/recorder',
+    isPrimary: true,
+  ),
+  NavDestinationSpec(
+    icon: Icons.task_alt_outlined,
+    selectedIcon: Icons.task_alt,
+    label: 'Actions',
+    routeName: AppRoutes.actions,
+    location: '/actions',
   ),
   NavDestinationSpec(
     icon: Icons.insights_outlined,
@@ -54,3 +70,7 @@ const List<NavDestinationSpec> kNavDestinations = [
     location: '/models',
   ),
 ];
+
+/// Index of the destination matching [path], or -1 when none does.
+int navIndexForPath(String path) =>
+    kNavDestinations.indexWhere((d) => path.startsWith(d.location));
