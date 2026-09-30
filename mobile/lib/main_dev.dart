@@ -16,6 +16,9 @@ void main() {
   runApp(
     ProviderScope(
       overrides: [baseUrlProvider.overrideWithValue(Env.emulatorBaseUrl)],
+      // No silent auto-retry: a "not configured" or offline error should show
+      // straight away, and pull-to-refresh is the user's retry.
+      retry: (retryCount, error) => null,
       child: const RinglyApp(),
     ),
   );
