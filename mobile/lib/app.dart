@@ -90,6 +90,20 @@ GoRouter createRouter({String initialLocation = '/login'}) => GoRouter(
       name: AppRoutes.memoResult,
       builder: (context, state) => MemoResultScreen(memoId: state.pathParameters['id']!),
     ),
+
+    // Full-screen: one deal, with the pre-call brief.
+    GoRoute(
+      path: '/deal/:id',
+      name: AppRoutes.dealDetail,
+      builder: (context, state) => const PlaceholderPage(title: 'Deal'),
+    ),
+
+    // Full-screen: grouped settings, opened from the drawer.
+    GoRoute(
+      path: '/settings',
+      name: AppRoutes.settings,
+      builder: (context, state) => const PlaceholderPage(title: 'Settings'),
+    ),
   ],
 );
 
