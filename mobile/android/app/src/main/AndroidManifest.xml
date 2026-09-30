@@ -1,4 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Release builds only get network access when it is declared; the debug
+         manifest adds it implicitly, which hides the omission until release. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="ringly_mobile"
         android:name="${applicationName}"
