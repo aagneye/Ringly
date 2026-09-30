@@ -11,10 +11,13 @@ import '../../data/repositories/notes_repository.dart';
 /// request and `synced` / `pending` / `failed` after it, so the UI and the
 /// outbox always agree on where each memo stands.
 class MemoSender {
-  const MemoSender({required this.store, required this.notes});
+  const MemoSender({required this.store, required this.notes, this.prepare});
 
   final LocalMemoStore store;
   final NotesRepository notes;
+
+  /// Optional pre-send step (on-device transcription). See [MemoPrepare].
+  final Future<LocalMemo> Function(LocalMemo memo)? prepare;
 
   /// One attempt. Returns the memo as saved afterwards; never throws for a
   /// network or server failure (the failure is written to the memo instead).
@@ -22,6 +25,10 @@ class MemoSender {
     await store.save(memo.copyWith(status: MemoStatus.syncing, clearError: true));
 
     try {
+      if (prepare != null) {
+        memo = await prepare!(memo);
+        await store.save(memo.copyWith(status: MemoStatus.syncing, clearError: true));
+      }
       final MemoResult result;
       final transcript = memo.transcript?.trim();
       if (transcript != null && transcript.isNotEmpty) {
