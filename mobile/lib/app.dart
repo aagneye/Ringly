@@ -7,6 +7,9 @@ import 'features/shared/widgets/app_shell.dart';
 /// refers to a constant instead of a raw string. Matches the page list in
 /// docs/flutter-migration-plan.md section 4.
 abstract final class AppRoutes {
+  static const login = 'login';
+  static const signup = 'signup';
+  static const dashboard = 'dashboard';
   static const today = 'today';
   static const pipeline = 'pipeline';
   static const recorder = 'recorder';
