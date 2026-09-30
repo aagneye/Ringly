@@ -6,7 +6,9 @@ import 'package:ringly_mobile/data/memo/local_memo.dart';
 import 'package:ringly_mobile/data/memo/local_memo_store.dart';
 import 'package:ringly_mobile/features/recorder/audio_capture.dart';
 import 'package:ringly_mobile/features/recorder/recorder_controller.dart';
+import 'package:ringly_mobile/providers/memo_providers.dart';
 
+import '../../support/audio_fixtures.dart';
 import '../../support/recorder_fakes.dart';
 
 void main() {
@@ -127,6 +129,44 @@ void main() {
     await Future<void>.delayed(Duration.zero);
     expect(state().levels.length, 48);
     expect(state().levels.last, closeTo(59 / 60, 1e-9));
+  });
+
+  test('a silent recording is rejected and deleted, never saved', () async {
+    capture.content = synthWav([(5, 0)]);
+    await controller().start();
+    clock.advance(const Duration(seconds: 5));
+    final memo = await controller().stop();
+
+    expect(memo, isNull);
+    expect(state().error, contains('Nothing was audible'));
+    expect(await File(capture.path!).exists(), isFalse);
+    expect(await LocalMemoStore(temp).list(), isEmpty);
+  });
+
+  test('dead air is trimmed before saving and the duration reflects it', () async {
+    capture.content = synthWav([(3, 0), (2, 6000), (3, 0)]);
+    await controller().start();
+    clock.advance(const Duration(seconds: 8));
+    final memo = await controller().stop();
+
+    expect(memo, isNotNull);
+    // 2 s of speech plus the 200 ms pad on each side.
+    expect(memo!.durationMs, 2400);
+    final saved = await File(memo.audioPath!).readAsBytes();
+    expect(saved.length, lessThan(capture.content.length ~/ 2));
+  });
+
+  test('trimming can be switched off', () async {
+    container.dispose();
+    container = containerFor([
+      ...overridesFor(capture: capture, permission: permission, clock: clock, dir: temp),
+      silenceTrimmerProvider.overrideWithValue(null),
+    ]);
+    capture.content = synthWav([(3, 0), (2, 6000), (3, 0)]);
+    await controller().start();
+    clock.advance(const Duration(seconds: 8));
+    final memo = await controller().stop();
+    expect(memo!.durationMs, 8000);
   });
 
   test('dbfsToLevel maps the decibel range onto 0..1', () {
