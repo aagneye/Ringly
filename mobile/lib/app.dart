@@ -6,6 +6,7 @@ import 'features/auth/screens/signup_screen.dart';
 import 'features/deal_detail/deal_detail_screen.dart';
 import 'features/home/home_screen.dart';
 import 'features/memo/memo_result_screen.dart';
+import 'features/pipeline/pipeline_screen.dart';
 import 'features/recorder/recorder_screen.dart';
 import 'features/shared/widgets/app_shell.dart';
 import 'features/shared/widgets/placeholder_page.dart';
@@ -62,9 +63,7 @@ GoRouter createRouter({String initialLocation = '/login'}) => GoRouter(
     GoRoute(
       path: '/pipeline',
       name: AppRoutes.pipeline,
-      builder: (context, state) => const AppShell(
-        child: PlaceholderPage(title: 'Pipeline'),
-      ),
+      builder: (context, state) => const AppShell(child: PipelineScreen()),
     ),
     GoRoute(
       path: '/recorder',
