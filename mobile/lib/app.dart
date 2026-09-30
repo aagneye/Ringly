@@ -12,7 +12,6 @@ import 'features/pipeline/pipeline_screen.dart';
 import 'features/recorder/recorder_screen.dart';
 import 'features/settings/settings_screen.dart';
 import 'features/shared/widgets/app_shell.dart';
-import 'features/shared/widgets/placeholder_page.dart';
 
 /// Route names, defined once so every `context.goNamed(...)` call in the app
 /// refers to a constant instead of a raw string. Matches the page list in
