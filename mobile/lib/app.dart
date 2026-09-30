@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'core/theme/app_theme.dart';
 import 'features/auth/screens/login_screen.dart';
 import 'features/auth/screens/signup_screen.dart';
+import 'features/deal_detail/deal_detail_screen.dart';
 import 'features/home/home_screen.dart';
 import 'features/memo/memo_result_screen.dart';
 import 'features/recorder/recorder_screen.dart';
@@ -95,7 +96,7 @@ GoRouter createRouter({String initialLocation = '/login'}) => GoRouter(
     GoRoute(
       path: '/deal/:id',
       name: AppRoutes.dealDetail,
-      builder: (context, state) => const PlaceholderPage(title: 'Deal'),
+      builder: (context, state) => DealDetailScreen(dealId: state.pathParameters['id']!),
     ),
 
     // Full-screen: grouped settings, opened from the drawer.
