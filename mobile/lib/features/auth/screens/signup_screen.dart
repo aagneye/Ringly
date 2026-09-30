@@ -41,7 +41,7 @@ class _SignupScreenState extends State<SignupScreen> {
     await Future<void>.delayed(const Duration(milliseconds: 500));
     if (!mounted) return;
     setState(() => _submitting = false);
-    context.goNamed(AppRoutes.dashboard);
+    context.goNamed(AppRoutes.home);
   }
 
   @override
